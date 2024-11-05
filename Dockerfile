@@ -1,16 +1,16 @@
-FROM ubuntu
+FROM node
 
-WORKDIR /var/www/html/server/
+WORKDIR /app
 
-RUN apt-get update && apt-get upgrade -y
-RUN apt-get install nodejs -y 
-RUN apt-get install npm -y
-
-COPY ./ /var/www/html/server/
+COPY package*.json ./
 
 RUN npm install
+
+COPY . .
+
+COPY key.pem /etc/ssl/
+COPY cert.pem /etc/ssl/
 
 EXPOSE 3000
 
 CMD ["npm", "run", "start:dev"]
-git check
